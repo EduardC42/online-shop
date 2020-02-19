@@ -1,0 +1,81 @@
+package org.fasttrackit.onlineshop.domain;
+
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+
+
+public class Product {
+
+
+    @Id
+    private long id;
+    @NotNull
+    private String name;
+    @NotNull
+    private String description;
+    private double price;
+    @NotNull
+    private int quantity;
+    @NotNull
+    private String imageUrl;
+
+    public long getId() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+}

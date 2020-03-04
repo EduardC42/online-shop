@@ -30,6 +30,35 @@ public class ProductServiceIntegrationTests {
 
     }
 
+    @Test
+    void updateProduct_whenValidRequest_thenReturnUpdateProduct() {
+        Product product = createProduct();
+
+        SaveProductRequest request = new SaveProductRequest();
+        request.setName(product.getName() + "updated");
+        request.setDescription(product.getDescription() + "updated");
+        request.setPrice(product.getPrice() + 10);
+        request.setQuantity(product.getQuantity() + 10);
+
+
+        Product updatedProduct = productService.updateProduct(product.getId(), request);
+        assertThat(updatedProduct, notNullValue());
+        assertThat(updatedProduct.getId(), is(product.getId()));
+        assertThat(updatedProduct.getName(), is(request.getName()));
+        assertThat(updatedProduct.getDescription(), is(request.getDescription()));
+        assertThat(updatedProduct.getPrice(), is(request.getPrice()));
+        assertThat(updatedProduct.getQuantity(), is(request.getQuantity()));
+    }
+
+    @Test
+    void deleteProduct_whenExistingProduct_thenProductDoesNotExistAnymore() {
+        Product product = createProduct();
+        productService.deleteProduct(product.getId());
+        Assertions.assertThrows(ResourceNotFoundException.class,
+                () -> productService.getProduct(999999));
+
+    }
+
     private Product createProduct() {
         SaveProductRequest request = new SaveProductRequest();
         request.setName("Phone");
@@ -62,6 +91,7 @@ public class ProductServiceIntegrationTests {
         }
 
     }
+
     @Test
     void getProduct_whenExistingProduct_thenReturnProduct() {
         Product product = createProduct();
@@ -76,8 +106,9 @@ public class ProductServiceIntegrationTests {
         assertThat(product.getDescription(), is(product.getDescription()));
 
     }
+
     @Test
-    void  getProduct_whenNonExistingProduct_thenThrowResourceNotFoundException() {
+    void getProduct_whenNonExistingProduct_thenThrowResourceNotFoundException() {
         Assertions.assertThrows(ResourceNotFoundException.class,
                 () -> productService.getProduct(999999));
 

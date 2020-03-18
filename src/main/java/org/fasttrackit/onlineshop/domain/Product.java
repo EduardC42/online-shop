@@ -1,41 +1,25 @@
 package org.fasttrackit.onlineshop.domain;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Product {
-
-
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @NotNull
     private String name;
-    @NotNull
     private String description;
+    @NotNull
     private double price;
     @NotNull
     private int quantity;
-    @NotNull
     private String imageUrl;
 
     public long getId() {
         return id;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                ", quantity=" + quantity +
-                ", imageUrl='" + imageUrl + '\'' +
-                '}';
     }
 
     public void setId(long id) {
@@ -78,7 +62,17 @@ public class Product {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
     }
+    @ManyToMany(mappedBy = "products")
+    private Set<Cart> carts = new HashSet<>();
 }
